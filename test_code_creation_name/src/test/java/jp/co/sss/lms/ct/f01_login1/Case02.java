@@ -55,7 +55,7 @@ public class Case02 {
 		webDriver.findElement(By.name("loginId")).sendKeys("test999");
 		webDriver.findElement(By.name("password")).sendKeys("test999");
 
-		webDriver.findElement(By.id("btn-primary")).click();
+		webDriver.findElement(By.className("btn-primary")).click();
 
 		visibilityTimeout(By.className("error"), 5);
 
