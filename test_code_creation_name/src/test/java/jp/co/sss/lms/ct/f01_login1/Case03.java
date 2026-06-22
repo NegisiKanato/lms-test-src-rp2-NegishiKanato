@@ -57,8 +57,6 @@ public class Case03 {
 
 		webDriver.findElement(By.className("btn-primary")).click();
 
-		goTo("http://localhost:8080/lms/course/detail");
-
 		getEvidence(new Object() {
 		});
 	}
