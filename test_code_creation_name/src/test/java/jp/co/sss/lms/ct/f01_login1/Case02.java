@@ -41,8 +41,8 @@ public class Case02 {
 
 		assertEquals("ログイン | LMS", webDriver.getTitle());
 
-		visibilityTimeout(By.name("loginId"), 2);
-		visibilityTimeout(By.name("password"), 2);
+		assertTrue(webDriver.findElement(By.name("loginId")).isDisplayed());
+		assertTrue(webDriver.findElement(By.name("password")).isDisplayed());
 
 		getEvidence(new Object() {
 		});
