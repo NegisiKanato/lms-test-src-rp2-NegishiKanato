@@ -59,7 +59,7 @@ public class Case04 {
 
 		webDriver.findElement(By.className("btn-primary")).click();
 
-		goTo("http://localhost:8080/lms/course/detail");
+		assertEquals("コース詳細 | LMS", webDriver.getTitle());
 
 		getEvidence(new Object() {
 		});
@@ -73,6 +73,8 @@ public class Case04 {
 		webDriver.findElement(By.className("dropdown-toggle")).click();
 		webDriver.findElement(By.linkText("ヘルプ")).click();
 
+		assertEquals("ヘルプ | LMS", webDriver.getTitle());
+
 		getEvidence(new Object() {
 		});
 	}
@@ -82,8 +84,18 @@ public class Case04 {
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
 
-		String url = webDriver.findElement(By.linkText("よくある質問")).getAttribute("href");
-		webDriver.get(url);
+		String currentTab = webDriver.getWindowHandle();
+
+		webDriver.findElement(By.linkText("よくある質問")).click();
+
+		for (String handle : webDriver.getWindowHandles()) {
+			if (!handle.equals(currentTab)) {
+				webDriver.switchTo().window(handle);
+				break;
+			}
+		}
+
+		assertEquals("よくある質問 | LMS", webDriver.getTitle());
 
 		getEvidence(new Object() {
 		});

@@ -57,6 +57,8 @@ public class Case03 {
 
 		webDriver.findElement(By.className("btn-primary")).click();
 
+		assertEquals("コース詳細 | LMS", webDriver.getTitle());
+
 		getEvidence(new Object() {
 		});
 	}
