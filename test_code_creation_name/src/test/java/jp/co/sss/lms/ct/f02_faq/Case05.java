@@ -3,6 +3,8 @@ package jp.co.sss.lms.ct.f02_faq;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.Duration;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +13,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
-
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * 結合テスト よくある質問機能
@@ -38,41 +41,97 @@ public class Case05 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		// TODO ここに追加
+		goTo("http://localhost:8080/lms/");
+
+		assertEquals("ログイン | LMS", webDriver.getTitle());
+
+		assertTrue(webDriver.findElement(By.name("loginId")).isDisplayed());
+		assertTrue(webDriver.findElement(By.name("password")).isDisplayed());
+
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(2)
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
-		// TODO ここに追加
+		webDriver.findElement(By.name("loginId")).sendKeys("StudentAA01");
+		webDriver.findElement(By.name("password")).sendKeys("StudentTest01");
+
+		webDriver.findElement(By.className("btn-primary")).click();
+
+		assertEquals("コース詳細 | LMS", webDriver.getTitle());
+
+		getEvidence(new Object() {
+		});
 	}
-	
+
 	@Test
 	@Order(3)
 	@DisplayName("テスト03 上部メニューの「ヘルプ」リンクからヘルプ画面に遷移")
 	void test03() {
-		// TODO ここに追加
+		webDriver.findElement(By.className("dropdown-toggle")).click();
+		webDriver.findElement(By.linkText("ヘルプ")).click();
+
+		assertEquals("ヘルプ | LMS", webDriver.getTitle());
+
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(4)
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
-		// TODO ここに追加
+		String currentTab = webDriver.getWindowHandle();
+
+		webDriver.findElement(By.linkText("よくある質問")).click();
+
+		for (String handle : webDriver.getWindowHandles()) {
+			if (!handle.equals(currentTab)) {
+				webDriver.switchTo().window(handle);
+				break;
+			}
+		}
+
+		new WebDriverWait(webDriver, Duration.ofSeconds(5))
+				.until(ExpectedConditions.titleIs("よくある質問 | LMS"));
+
+		assertEquals("よくある質問 | LMS", webDriver.getTitle());
+
+		getEvidence(new Object() {
+		});
 	}
+
 	@Test
 	@Order(5)
 	@DisplayName("テスト05 キーワード検索で該当キーワードを含む検索結果だけ表示")
 	void test05() {
-		// TODO ここに追加
+
+		webDriver.findElement(By.name("keyword")).sendKeys("キャンセル");
+
+		webDriver.findElement(By.cssSelector("input[value='検索']")).click();
+
+		assertTrue(webDriver.findElement(By.tagName("body"))
+				.getText()
+				.contains("キャンセル料・途中退校について"));
+
+		getEvidence(new Object() {
+		});
 	}
-	
+
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 「クリア」ボタン押下で入力したキーワードを消去")
 	void test06() {
-		// TODO ここに追加
+
+		webDriver.findElement(By.cssSelector("input[value='クリア']")).click();
+
+		assertEquals("", webDriver.findElement(By.name("keyword")).getAttribute("value"));
+
+		getEvidence(new Object() {
+		});
 	}
 
 }
