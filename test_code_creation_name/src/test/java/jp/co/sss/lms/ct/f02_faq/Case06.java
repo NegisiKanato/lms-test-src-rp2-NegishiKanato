@@ -114,7 +114,7 @@ public class Case06 {
 
 		assertTrue(webDriver.findElement(By.tagName("table"))
 				.getText()
-				.contains("研修"));
+				.contains("研修の申し込みはどのようにすれば良いですか？"));
 
 		getEvidence(new Object() {
 		});
