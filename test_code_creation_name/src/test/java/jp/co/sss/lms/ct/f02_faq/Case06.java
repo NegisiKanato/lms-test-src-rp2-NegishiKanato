@@ -126,12 +126,12 @@ public class Case06 {
 	void test06() {
 
 		WebElement question = webDriver.findElement(
-				By.xpath("//span[contains(text(),'研修の申し込みはどのようにすれば良いですか？')]"));
+				By.xpath("//dt[.//span[contains(text(),'研修の申し込みはどのようにすれば良いですか？')]]"));
 
 		JavascriptExecutor js = (JavascriptExecutor) webDriver;
 		js.executeScript("arguments[0].click();", question);
 
-		WebElement answer = webDriver.findElement(By.xpath("//span[contains(text(),'営業担当がいる場合は')]"));
+		WebElement answer = webDriver.findElement(By.xpath("//dd[contains(.,'営業担当がいる場合は')]"));
 		assertTrue(answer.isDisplayed());
 
 		getEvidence(new Object() {
